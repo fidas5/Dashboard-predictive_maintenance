@@ -12,40 +12,40 @@ import time
 import random
 import os
 
-# Configuration de la page
+# Page configuration
 st.set_page_config(
-    page_title="Tableau de Bord - Maintenance Prédictive",
+    page_title="Dashboard - Predictive Maintenance",
     page_icon="⚙️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Titre principal
-st.title("🔧 Tableau de Bord - Maintenance Prédictive des Moteurs Électriques")
+# Main title
+st.title("🔧 Dashboard - Predictive Maintenance of Electric Motors")
 st.markdown("---")
 
-# Charger et préparer le modèle
+# Load and prepare the model
 @st.cache_data
 def load_and_prepare_model():
-    # Utiliser un chemin robuste pour le CSV
+    # Use a robust path for the CSV
     current_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(current_dir, "predictive_maintenance.csv")
 
-    # Charger le dataset
+    # Load dataset
     df = pd.read_csv(file_path)
 
-    # Renommer les colonnes
+    # Rename columns
     df.columns = [col.replace("[K]", "_K")
                      .replace("[rpm]", "_rpm")
                      .replace("[Nm]", "_Nm")
                      .replace("[min]", "_min")
                      .replace(" ", "_") for col in df.columns]
 
-    # Séparer les caractéristiques et la cible
+    # Separate features and target
     X = df.drop(["UDI", "Product_ID", "Target", "Failure_Type"], axis=1)
     y = df["Target"]
 
-    # Préprocesseur
+    # Preprocessor
     numerical_cols = X.select_dtypes(include=["int64", "float64"]).columns
     categorical_cols = X.select_dtypes(include=["object"]).columns
 
@@ -58,12 +58,12 @@ def load_and_prepare_model():
             ("cat", categorical_transformer, categorical_cols)
         ])
 
-    # Diviser les données
+    # Split data
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    # Créer et entraîner le modèle
+    # Create and train the model
     model = Pipeline(steps=[
         ("preprocessor", preprocessor),
         ("classifier", RandomForestClassifier(random_state=42))
@@ -72,83 +72,83 @@ def load_and_prepare_model():
 
     return model, df, X_test, y_test
 
-# Charger le modèle
+# Load model
 model, df, X_test, y_test = load_and_prepare_model()
 
-# Sidebar pour les contrôles
-st.sidebar.header("🎛️ Contrôles")
+# Sidebar controls
+st.sidebar.header("🎛️ Controls")
 
-if st.sidebar.button("🔄 Actualiser les Données"):
+if st.sidebar.button("🔄 Refresh Data"):
     st.rerun()
 
-# Sélection d'un échantillon
-sample_idx = st.sidebar.selectbox("Sélectionner un échantillon:", range(len(X_test)))
+# Sample selection
+sample_idx = st.sidebar.selectbox("Select a sample:", range(len(X_test)))
 sample_data = X_test.iloc[sample_idx:sample_idx+1]
 
-# Prédiction
+# Prediction
 prediction = model.predict(sample_data)[0]
 prediction_proba = model.predict_proba(sample_data)[0]
 
-# Colonnes principales
+# Main columns
 col1, col2, col3 = st.columns([1, 1, 1])
 
-# Colonne 1: Valeurs des capteurs
+# Column 1: Sensor values
 with col1:
-    st.subheader("📊 Valeurs des Capteurs")
+    st.subheader("📊 Sensor Values")
     air_temp = sample_data["Air_temperature__K"].values[0]
     process_temp = sample_data["Process_temperature__K"].values[0]
     rotation_speed = sample_data["Rotational_speed__rpm"].values[0]
     torque = sample_data["Torque__Nm"].values[0]
     tool_wear = sample_data["Tool_wear__min"].values[0]
 
-    st.metric("🌡️ Température Air", f"{air_temp:.1f} K", delta=f"{random.uniform(-0.5, 0.5):.1f}")
-    st.metric("🔥 Température Processus", f"{process_temp:.1f} K", delta=f"{random.uniform(-0.3, 0.3):.1f}")
-    st.metric("⚡ Vitesse Rotation", f"{rotation_speed:.0f} rpm", delta=f"{random.uniform(-10, 10):.0f}")
-    st.metric("🔧 Couple", f"{torque:.1f} Nm", delta=f"{random.uniform(-1, 1):.1f}")
-    st.metric("⏱️ Usure Outil", f"{tool_wear:.0f} min", delta=f"{random.uniform(0, 2):.0f}")
+    st.metric("🌡️ Air Temperature", f"{air_temp:.1f} K", delta=f"{random.uniform(-0.5, 0.5):.1f}")
+    st.metric("🔥 Process Temperature", f"{process_temp:.1f} K", delta=f"{random.uniform(-0.3, 0.3):.1f}")
+    st.metric("⚡ Rotation Speed", f"{rotation_speed:.0f} rpm", delta=f"{random.uniform(-10, 10):.0f}")
+    st.metric("🔧 Torque", f"{torque:.1f} Nm", delta=f"{random.uniform(-1, 1):.1f}")
+    st.metric("⏱️ Tool Wear", f"{tool_wear:.0f} min", delta=f"{random.uniform(0, 2):.0f}")
 
-# Colonne 2: Prédictions IA
+# Column 2: AI Predictions
 with col2:
-    st.subheader("🤖 Prédictions IA")
+    st.subheader("🤖 AI Predictions")
     if prediction == 0:
-        st.success("✅ **NORMAL** - Fonctionnement optimal")
+        st.success("✅ **NORMAL** - Optimal operation")
     else:
-        st.error("⚠️ **DÉFAILLANCE PRÉDITE** - Maintenance requise")
+        st.error("⚠️ **PREDICTED FAILURE** - Maintenance required")
 
     prob_normal = prediction_proba[0] * 100
     prob_failure = prediction_proba[1] * 100
 
-    st.write("**Probabilités:**")
+    st.write("**Probabilities:**")
     st.write(f"• Normal: {prob_normal:.1f}%")
-    st.write(f"• Défaillance: {prob_failure:.1f}%")
+    st.write(f"• Failure: {prob_failure:.1f}%")
 
     fig_pie = go.Figure(data=[go.Pie(
-        labels=["Normal", "Défaillance"],
+        labels=["Normal", "Failure"],
         values=[prob_normal, prob_failure],
         hole=0.3,
         marker_colors=["green", "red"]
     )])
-    fig_pie.update_layout(title="Probabilités de Prédiction", height=300)
+    fig_pie.update_layout(title="Prediction Probabilities", height=300)
     st.plotly_chart(fig_pie, use_container_width=True)
 
-# Colonne 3: Alertes et recommandations
+# Column 3: Alerts and Recommendations
 with col3:
-    st.subheader("🚨 Alertes et Recommandations")
+    st.subheader("🚨 Alerts and Recommendations")
     if prediction == 1:
-        st.warning("⚠️ **ALERTE MAINTENANCE**")
-        st.write("• Planifier une inspection immédiate")
-        st.write("• Vérifier les roulements")
-        st.write("• Contrôler la température")
-        st.write("• Examiner les vibrations")
+        st.warning("⚠️ **MAINTENANCE ALERT**")
+        st.write("• Schedule an immediate inspection")
+        st.write("• Check bearings")
+        st.write("• Monitor temperature")
+        st.write("• Examine vibrations")
     else:
-        st.info("ℹ️ **FONCTIONNEMENT NORMAL**")
-        st.write("• Tous les paramètres sont normaux")
-        st.write("• Maintenance préventive à jour")
-        st.write("• Surveillance continue active")
+        st.info("ℹ️ **NORMAL OPERATION**")
+        st.write("• All parameters are normal")
+        st.write("• Preventive maintenance is up to date")
+        st.write("• Continuous monitoring active")
 
-# Tendances historiques
+# Historical trends
 st.markdown("---")
-st.subheader("📈 Tendances Historiques")
+st.subheader("📈 Historical Trends")
 
 col1, col2 = st.columns(2)
 time_points = pd.date_range(start="2024-01-01", periods=30, freq="D")
@@ -157,28 +157,28 @@ with col1:
     temp_data = np.random.normal(process_temp, 2, 30)
     fig_temp = go.Figure()
     fig_temp.add_trace(go.Scatter(x=time_points, y=temp_data, mode="lines+markers", line=dict(color="orange")))
-    fig_temp.update_layout(title="Évolution Température (30j)", xaxis_title="Date", yaxis_title="Température (K)")
+    fig_temp.update_layout(title="Temperature Over Time (Last 30 Days)", xaxis_title="Date", yaxis_title="Temperature (K)")
     st.plotly_chart(fig_temp, use_container_width=True)
 
 with col2:
     speed_data = np.random.normal(rotation_speed, 50, 30)
     fig_speed = go.Figure()
     fig_speed.add_trace(go.Scatter(x=time_points, y=speed_data, mode="lines+markers", line=dict(color="blue")))
-    fig_speed.update_layout(title="Évolution Vitesse Rotation (30j)", xaxis_title="Date", yaxis_title="Vitesse (rpm)")
+    fig_speed.update_layout(title="Rotation Speed Over Time (Last 30 Days)", xaxis_title="Date", yaxis_title="Speed (rpm)")
     st.plotly_chart(fig_speed, use_container_width=True)
 
-# Distribution des données
+# Data distribution
 st.markdown("---")
-st.subheader("📊 Distribution des Données")
+st.subheader("📊 Data Distribution")
 
 col1, col2 = st.columns(2)
 with col1:
-    fig_hist1 = px.histogram(df, x="Process_temperature__K", color="Target", title="Distribution Température Processus")
+    fig_hist1 = px.histogram(df, x="Process_temperature__K", color="Target", title="Process Temperature Distribution")
     st.plotly_chart(fig_hist1, use_container_width=True)
 with col2:
-    fig_hist2 = px.histogram(df, x="Rotational_speed__rpm", color="Target", title="Distribution Vitesse Rotation")
+    fig_hist2 = px.histogram(df, x="Rotational_speed__rpm", color="Target", title="Rotation Speed Distribution")
     st.plotly_chart(fig_hist2, use_container_width=True)
 
 # Footer
 st.markdown("---")
-st.markdown("**Tableau de Bord de Maintenance Prédictive** - Développé avec Streamlit et Machine Learning")
+st.markdown("**Predictive Maintenance Dashboard** - Developed with Streamlit and Machine Learning")
