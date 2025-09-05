@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+      
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #ffffff;
+        font-family: 'Roboto', sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .title {
+        color: #1a5276;
+        font-weight: 700;
+        font-size: 48px;
+      }
+      
+      .subtitle {
+        color: #2e86c1;
+        font-weight: 500;
+        font-size: 36px;
+      }
+      
+      .content {
+        color: #333333;
+        font-weight: 400;
+        font-size: 24px;
+      }
+      
+      .accent {
+        color: #e74c3c;
+      }
+      
+      .bullet-point {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      
+      .bullet-icon {
+        color: #e74c3c;
+        margin-right: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container flex flex-col p-10">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="title mb-2">Introduction à la Maintenance Prédictive</h1>
+        <div class="w-32 h-1 bg-blue-600"></div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="flex flex-row">
+        <!-- Left Column - Key Points -->
+        <div class="w-1/2 pr-8">
+          <div class="bullet-point">
+            <i class="fas fa-cog bullet-icon fa-lg"></i>
+            <p class="content">La maintenance prédictive utilise l'analyse de données pour anticiper les défaillances</p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-chart-line bullet-icon fa-lg"></i>
+            <p class="content">Réduction des coûts de maintenance de <span class="accent">10-40%</span></p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-clock bullet-icon fa-lg"></i>
+            <p class="content">Augmentation de la disponibilité des équipements de <span class="accent">5-15%</span></p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-industry bullet-icon fa-lg"></i>
+            <p class="content">Élément clé de l'<span class="accent">Industrie 4.0</span> et de la transformation numérique</p>
+          </div>
+          
+          <div class="mt-8">
+            <h3 class="subtitle mb-4">Évolution des approches de maintenance</h3>
+            <div class="content">
+              <p><span class="accent">Réactive</span> → <span class="accent">Préventive</span> → <span class="accent">Prédictive</span></p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Column - Image -->
+        <div class="w-1/2 flex justify-center items-center">
+          <img src="/home/ubuntu/upload/search_images/a63bIg3IT7Oy.jpg" alt="Système de surveillance de moteur électrique" class="rounded-lg shadow-lg" style="max-width: 390px; max-height: 260px;">
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="mt-auto pt-6">
+        <p class="text-gray-600 text-xl">Maintenance Prédictive des Moteurs Électriques par IA</p>
+      </div>
+    </div>
+  </body>
+</html>
+

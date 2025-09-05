@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+      
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #ffffff;
+        font-family: 'Roboto', sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .title {
+        color: #1a5276;
+        font-weight: 700;
+        font-size: 48px;
+      }
+      
+      .subtitle {
+        color: #2e86c1;
+        font-weight: 500;
+        font-size: 36px;
+      }
+      
+      .content {
+        color: #333333;
+        font-weight: 400;
+        font-size: 24px;
+      }
+      
+      .accent {
+        color: #e74c3c;
+      }
+      
+      .bullet-point {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      
+      .bullet-icon {
+        color: #e74c3c;
+        margin-right: 12px;
+      }
+      
+      .metric-box {
+        border-left: 4px solid #2e86c1;
+        padding-left: 16px;
+        margin-bottom: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container flex flex-col p-10">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="title mb-2">Modèle d'IA pour la Prédiction</h1>
+        <div class="w-32 h-1 bg-blue-600"></div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="flex flex-row">
+        <!-- Left Column - Key Points -->
+        <div class="w-1/2 pr-8">
+          <h3 class="subtitle mb-4">Random Forest Classifier</h3>
+          
+          <div class="bullet-point">
+            <i class="fas fa-code-branch bullet-icon fa-lg"></i>
+            <p class="content">Algorithme d'ensemble basé sur de multiples arbres de décision</p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-database bullet-icon fa-lg"></i>
+            <p class="content">Entraîné sur 8000 échantillons, testé sur 2000</p>
+          </div>
+          
+          <div class="mt-6 mb-6">
+            <h4 class="text-2xl font-medium text-blue-700 mb-3">Métriques de performance</h4>
+            
+            <div class="metric-box">
+              <p class="content"><span class="font-medium">Précision globale:</span> <span class="accent">98.05%</span></p>
+            </div>
+            
+            <div class="metric-box">
+              <p class="content"><span class="font-medium">Précision (défaillance):</span> <span class="accent">89%</span></p>
+            </div>
+            
+            <div class="metric-box">
+              <p class="content"><span class="font-medium">Rappel (défaillance):</span> <span class="accent">49%</span></p>
+            </div>
+            
+            <div class="metric-box">
+              <p class="content"><span class="font-medium">AUC:</span> <span class="accent">0.98</span></p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Column - Image -->
+        <div class="w-1/2 flex flex-col justify-center items-center">
+          <img src="/home/ubuntu/screenshots/confusion_matrix.png" alt="Matrice de confusion du modèle" class="rounded-lg shadow-lg mb-4" style="max-width: 500px; max-height: 380px;">
+          
+          <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mt-4">
+            <p class="text-xl"><i class="fas fa-lightbulb text-blue-500 mr-2"></i>Le défi principal: améliorer le <span class="accent">rappel</span> pour la détection des défaillances</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="mt-auto pt-6">
+        <p class="text-gray-600 text-xl">Maintenance Prédictive des Moteurs Électriques par IA</p>
+      </div>
+    </div>
+  </body>
+</html>
+

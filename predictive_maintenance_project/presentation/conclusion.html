@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+      
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #ffffff;
+        font-family: 'Roboto', sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .title {
+        color: #1a5276;
+        font-weight: 700;
+        font-size: 48px;
+      }
+      
+      .subtitle {
+        color: #2e86c1;
+        font-weight: 500;
+        font-size: 36px;
+      }
+      
+      .content {
+        color: #333333;
+        font-weight: 400;
+        font-size: 24px;
+      }
+      
+      .accent {
+        color: #e74c3c;
+      }
+      
+      .bullet-point {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      
+      .bullet-icon {
+        color: #e74c3c;
+        margin-right: 12px;
+      }
+      
+      .conclusion-box {
+        border-left: 4px solid #e74c3c;
+        padding-left: 16px;
+        margin-top: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container flex flex-col p-10">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="title mb-2">Conclusion</h1>
+        <div class="w-32 h-1 bg-blue-600"></div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="flex flex-row">
+        <!-- Left Column - Key Points -->
+        <div class="w-1/2 pr-8">
+          <h3 class="subtitle mb-4">Points clés à retenir</h3>
+          
+          <div class="bullet-point">
+            <i class="fas fa-check-circle bullet-icon fa-lg"></i>
+            <p class="content">L'IA peut efficacement prédire les défaillances des moteurs électriques</p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-check-circle bullet-icon fa-lg"></i>
+            <p class="content">Réduction significative des temps d'arrêt non planifiés</p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-check-circle bullet-icon fa-lg"></i>
+            <p class="content">Optimisation des coûts de maintenance</p>
+          </div>
+          
+          <div class="bullet-point">
+            <i class="fas fa-check-circle bullet-icon fa-lg"></i>
+            <p class="content">Extension de la durée de vie des équipements</p>
+          </div>
+          
+          <div class="conclusion-box mt-6">
+            <p class="content font-medium">La maintenance prédictive représente un <span class="accent">pas décisif</span> vers l'industrie 4.0 et la transformation numérique des opérations industrielles.</p>
+          </div>
+        </div>
+        
+        <!-- Right Column - Image -->
+        <div class="w-1/2 flex flex-col justify-center items-center">
+          <img src="/home/ubuntu/upload/search_images/QyITKS53aytQ.png" alt="Concept de maintenance préventive" class="rounded-lg shadow-lg mb-6" style="max-width: 422px; max-height: 373px;">
+          
+          <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mt-4">
+            <p class="text-xl"><i class="fas fa-lightbulb text-blue-500 mr-2"></i>L'avenir réside dans l'intégration de l'IA, l'IoT et l'edge computing pour une maintenance véritablement <span class="accent">prédictive et optimisée</span></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="mt-auto pt-6">
+        <p class="text-gray-600 text-xl">Maintenance Prédictive des Moteurs Électriques par IA</p>
+      </div>
+    </div>
+  </body>
+</html>
+
